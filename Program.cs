@@ -5,49 +5,38 @@ using OpenQA.Selenium.Chrome;
 
 var driver = new ChromeDriver();
 
-driver.Navigate().GoToUrl("https://iosys.co.jp/items/smartphone?page=1#bc");
+var endpoints = new string[]{
+    "https://iosys.co.jp/items/smartphone",
+    "https://iosys.co.jp/items/tablet",
+    "https://iosys.co.jp/items/audio",
+    "https://iosys.co.jp/items/featurephone",
+    "https://iosys.co.jp/items/mobile-router",
+    "https://iosys.co.jp/items/smartphonegoods",
+    "https://iosys.co.jp/items/home_varietygoods",
+    "https://iosys.co.jp/items/wearable",
+    "https://iosys.co.jp/items/pc"
+};
 
-var itemForm = driver.FindElements(By.CssSelector("form[id]"));
-
-string itemNo,itemName,itemRank,itemSpec,itemURL;
-
-foreach(var item in itemForm){
-    itemNo = "";
-    itemName = "";
-    itemRank= "";
-    itemSpec="";
-    itemURL= "";
+foreach(var endpoint in endpoints){
+    var param = endpoint.Split('/',StringSplitOptions.RemoveEmptyEntries);
+    var categoty = param[param.Length - 1];
     
-    var gnNode = item.FindElement(By.CssSelector("input[name='gn']"));
-    if(gnNode!= null){
-        itemNo = gnNode.GetAttribute("value");
-    }
+    iosysParser.itemList.Clear();
+    driver.Navigate().GoToUrl(endpoint);
+    var lastPage = iosysParser.FindLastPage(driver);
+    Console.WriteLine("{0},{1}",categoty,lastPage);
 
-    var nameNode = item.FindElement(By.CssSelector("input[name='name']"));
-    if(nameNode!= null){
-        itemName = nameNode.GetAttribute("value");
+    for(int i = 1;i <= lastPage;i++)
+    {
+        driver.Navigate().GoToUrl(
+                endpoint + "?page=" + i + "#bc"
+            //string.Format("https://iosys.co.jp/items/smartphone?page={0}#bc",i)
+        );
+        iosysParser.ParseItemInfo(driver);
     }
-    
-    var rankNode = item.FindElement(By.CssSelector("input[name='rank']"));
-    if(rankNode!= null){
-        itemRank = rankNode.GetAttribute("value");
-    }
-
-    var specNode = item.FindElement(By.CssSelector("input[name='spec']"));
-    if(specNode!= null){
-        itemSpec = specNode.GetAttribute("value");
-    }
-    var urlNode = item.FindElement(By.CssSelector("input[name='url']"));
-    if(urlNode!= null){
-        itemURL = urlNode.GetAttribute("value");
-    }
-
-    Console.WriteLine("{0},{1},{2},{3},{4}",itemNo,itemName,itemRank,itemSpec,itemURL);
+    iosysParser.OutputItemList(string.Format("{0}.csv",categoty));
 }
 
-
-
 driver.Quit();
+Console.WriteLine("over");
 
-
-Console.WriteLine("test");
