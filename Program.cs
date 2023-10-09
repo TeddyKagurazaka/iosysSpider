@@ -29,7 +29,7 @@ foreach(var endpoint in endpoints){
 
     for(int i = 1;i <= lastPage;i++)
     {
-        Console.WriteLine("{0} - Page:{1}",categoty,i);
+        Console.WriteLine("{0} - Page:{1}/{2}",categoty,i,lastPage);
         driver.Navigate().GoToUrl(
                 endpoint + "?page=" + i + "#bc"
             //string.Format("https://iosys.co.jp/items/smartphone?page={0}#bc",i)
