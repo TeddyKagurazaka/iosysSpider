@@ -23,6 +23,7 @@ foreach(var endpoint in endpoints){
     var categoty = param[param.Length - 1];
     
     iosysParser.itemList.Clear();
+    iosysParser.itemListV2.Clear();
     driver.Navigate().GoToUrl(endpoint);
     var lastPage = iosysParser.FindLastPage(driver);
     Console.WriteLine("{0},{1}",categoty,lastPage);

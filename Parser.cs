@@ -130,27 +130,27 @@ public static class iosysParser{
             //New Item
             var maker = item.FindElement(By.CssSelector("p[class='maker']"));
             if(maker != null){
-                newItem.maker = maker.Text;
+                newItem.maker = maker.Text.Replace("メーカー：","");
             }
 
             var release = item.FindElement(By.CssSelector("p[class='release']"));
             if(release != null){
-                newItem.releaseDate = release.Text;
+                newItem.releaseDate = release.Text.Replace("発売日：","");
             }
 
             var stock = item.FindElement(By.CssSelector("p[class='stock']"));
             if(stock != null){
-                newItem.stock = stock.Text;
+                newItem.stock = stock.Text.Replace("在庫数：","");
             }
 
             var whatInside = item.FindElement(By.CssSelector("p[class='accessory']"));
             if(whatInside != null){
-                newItem.whatInside = whatInside.Text;
+                newItem.whatInside = whatInside.Text.Replace("付属品: ","");
             }
 
             var price = item.FindElement(By.CssSelector("div[class='price']"));
             if(price != null){
-                newItem.price = price.Text.Replace(" ","").Replace("\n","");
+                newItem.price = price.Text.Replace(" ","").Replace("\n","").Replace("円(税込)","");
             }
             Console.WriteLine("{0},{1},{2},{3}",newItem.itemNo,newItem.itemName,newItem.itemRank,newItem.price);
             itemListV2.Add(newItem);
@@ -174,7 +174,7 @@ public static class iosysParser{
 
     public static void OutputItemListV2(string fileName = "item2.csv"){
         using(StreamWriter sw = new StreamWriter(fileName)){
-            sw.WriteLine("No,Name,Rank,Spec,Url,Maker,ReleaseDate,Stock,WhatInside,Price");
+            sw.WriteLine("No,Name,Rank,Spec,Url,Maker,ReleaseDate,Stock,WhatInside,Price(Yen,Tax.Incl)");
             foreach(var item in itemListV2)
                 sw.WriteLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\"",
                     item.itemNo,
