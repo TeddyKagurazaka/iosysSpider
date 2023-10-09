@@ -1,4 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using System.Collections;
+// See https://aka.ms/new-console-template for more information
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -28,13 +29,14 @@ foreach(var endpoint in endpoints){
 
     for(int i = 1;i <= lastPage;i++)
     {
+        Console.WriteLine("{0} - Page:{1}",categoty,i);
         driver.Navigate().GoToUrl(
                 endpoint + "?page=" + i + "#bc"
             //string.Format("https://iosys.co.jp/items/smartphone?page={0}#bc",i)
         );
-        iosysParser.ParseItemInfo(driver);
+        iosysParser.ParseItemInfoV2(driver);
     }
-    iosysParser.OutputItemList(string.Format("{0}.csv",categoty));
+    iosysParser.OutputItemListV2(string.Format("{0}_2.csv",categoty));
 }
 
 driver.Quit();
