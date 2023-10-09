@@ -150,7 +150,7 @@ public static class iosysParser{
 
             var price = item.FindElement(By.CssSelector("div[class='price']"));
             if(price != null){
-                newItem.price = price.Text.Replace(" ","").Replace("\n","").Replace("円(税込)","");
+                newItem.price = price.Text.Replace(" ","").Replace("\n","").Replace("円(税込)","").Replace(",","");
             }
             Console.WriteLine("{0},{1},{2},{3}",newItem.itemNo,newItem.itemName,newItem.itemRank,newItem.price);
             itemListV2.Add(newItem);
