@@ -18,6 +18,14 @@ var endpoints = new string[]{
     "https://iosys.co.jp/items/pc"
 };
 
+/*
+    sort=
+        h:Price H->L
+        l:Price L->H
+        vh:Stock H->L
+        vl:Stock L->H
+*/
+
 foreach(var endpoint in endpoints){
     var param = endpoint.Split('/',StringSplitOptions.RemoveEmptyEntries);
     var categoty = param[param.Length - 1];

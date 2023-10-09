@@ -110,47 +110,47 @@ public static class iosysParser{
 
             var name = item.FindElement(By.CssSelector("input[name='name']"));
             if(name != null){
-                newItem.itemName = name.GetAttribute("value");
+                newItem.itemName = name.GetAttribute("value").Trim();
             }
 
             var cond = item.FindElement(By.CssSelector("input[name='rank']"));
             if(cond != null){
-                newItem.itemRank = cond.GetAttribute("value");
+                newItem.itemRank = cond.GetAttribute("value").Trim();
             }
             var spec = item.FindElement(By.CssSelector("input[name='spec']"));
             if(spec!= null){
-                newItem.itemSpec = spec.GetAttribute("value");
+                newItem.itemSpec = spec.GetAttribute("value").Replace("\"","\"\"").Trim();
             }
 
             var href = item.FindElement(By.CssSelector("input[name='url']"));
             if(href != null){
-                newItem.itemURL = href.GetAttribute("value");
+                newItem.itemURL = "https://iosys.co.jp" + href.GetAttribute("value").Trim();
             }
 
             //New Item
             var maker = item.FindElement(By.CssSelector("p[class='maker']"));
             if(maker != null){
-                newItem.maker = maker.Text.Replace("メーカー：","");
+                newItem.maker = maker.Text.Replace("メーカー：","").Trim();
             }
 
             var release = item.FindElement(By.CssSelector("p[class='release']"));
             if(release != null){
-                newItem.releaseDate = release.Text.Replace("発売日：","");
+                newItem.releaseDate = release.Text.Replace("発売日：","").Trim();
             }
 
             var stock = item.FindElement(By.CssSelector("p[class='stock']"));
             if(stock != null){
-                newItem.stock = stock.Text.Replace("在庫数：","");
+                newItem.stock = stock.Text.Replace("在庫数：","").Trim();
             }
 
             var whatInside = item.FindElement(By.CssSelector("p[class='accessory']"));
             if(whatInside != null){
-                newItem.whatInside = whatInside.Text.Replace("付属品: ","");
+                newItem.whatInside = whatInside.Text.Replace("付属品: ","").Trim();
             }
 
             var price = item.FindElement(By.CssSelector("div[class='price']"));
             if(price != null){
-                newItem.price = price.Text.Replace(" ","").Replace("\n","").Replace("円(税込)","").Replace(",","");
+                newItem.price = price.Text.Replace(" ","").Replace("\n","").Replace("円(税込)","").Replace(",","").Trim();
             }
             Console.WriteLine("{0},{1},{2},{3}",newItem.itemNo,newItem.itemName,newItem.itemRank,newItem.price);
             itemListV2.Add(newItem);
