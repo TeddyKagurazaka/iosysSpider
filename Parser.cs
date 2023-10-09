@@ -160,7 +160,7 @@ public static class iosysParser{
     public static void OutputItemList(string fileName = "item.csv"){
         using(StreamWriter sw = new StreamWriter(fileName)){
             foreach(var item in itemList)
-                sw.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}",
+                sw.WriteLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"",
                     item.itemNo,
                     item.itemName,
                     item.itemRank,
